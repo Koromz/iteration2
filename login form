@@ -1,0 +1,70 @@
+ private void Loginbut_Click(object sender, EventArgs e)
+        {
+           //Turn the buttons visible so each user can pick the correct option//
+            Patientbut.Visible = true;
+            Doctorbut.Visible = true;
+            SenDoctorbut.Visible = true;
+           
+        }
+        //Method to link both the Person and Database class with inputted data in the system// 
+        private void Patientbut_Click(object sender, EventArgs e)
+        {
+           //Created instance of the Class Person where User Values can be held//
+            List<Person> people = new List<Person>();
+          //Created instance of the Database Class to link to my held queries//
+            Database_class db = new Database_class();
+           //This will access the query to check if the Username and Password are in the system//
+            people = db.GetPeople(Userbox.Text,Passwordbox.Text);
+              if (people.Count > 0)
+            {
+               //Displaying the new Form and closing the current Form if values match//
+                Patient_Form newform = new Patient_Form();
+                newform.ShowDialog();
+                this.Close();
+            }
+          
+        }
+
+        private void Doctorbut_Click(object sender, EventArgs e)
+        {
+            List<Person> people = new List<Person>();
+            Database_class db = new Database_class();
+            people = db.GetPeople(Userbox.Text, Passwordbox.Text);
+
+            if (people.Count > 0 )
+            {
+              // This is the second factor of the authentication where a keyword will need to be inputted//
+                Secondfacbox.Visible = true;
+                if (Secondfacbox.Text == "Doctor") 
+                {
+                    Doctor_Form newform = new Doctor_Form();
+                    newform.ShowDialog();
+                    this.Close();
+                }              
+            }
+        }
+        private void SenDoctor_Click (object sender, EventArgs e)
+            {
+            List<Person> people = new List<Person>();
+            Database_class db = new Database_class();
+            people = db.GetPeople(Userbox.Text, Passwordbox.Text);
+
+            if (people.Count > 0)
+            {
+                Secondfacbox.Visible = true;
+                if (Secondfacbox.Text == "Senior")
+                {
+                    Senior_Form newform = new Senior_Form();
+                    newform.ShowDialog();
+                    this.Close();
+                }
+            } 
+        }
+
+        private void Closebut_Click(object sender, EventArgs e)
+        //This will close the program.
+        {
+            this.Close();
+        }
+    }
+}
